@@ -1,5 +1,10 @@
 # py-shinylive-alt-fetch
 
+## How to use wrapper
+- 
+
+## pyfetch examples
+
 ```python
 # Download, save extracted file to local virtual fs
 from pyodide.http import pyfetch
@@ -29,3 +34,15 @@ buf = BytesIO(await response_c.bytes())
 
 df = pd.read_json(buf)
 ```
+
+### Run regular tests
+- activate venv: `source venv/bin/activate`
+- start fastapi app: `python3 src_test_webserver/main.py`
+- run pytest: `pytest -vv -x test`
+
+### Run pyodide tests with pyfetch calls written identical to wrapper
+- activate venv and start fastapi like above
+- export shinylive app: `hinylive export ./test/shinylive_tests ./src_test_webserver/shinyapps`
+- open shinylive app in edit mode: `http://localhost8000/apps/edit/`
+- Click "Run tests"
+- If not red text in bottom of editor screen, tests should be good
