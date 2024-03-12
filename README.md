@@ -1,4 +1,24 @@
 # py-shinylive-alt-fetch
+- Ultimate goal:
+
+- Develope like this:
+```python
+# from pyodide import http
+from pyodide_local import http
+
+async api_call():
+    r = await http.pyfectch(
+        url: "http://localhost:8000/get-string",
+        headers: {"Content-Type": "application/text"}
+    )
+    print(r.string())
+```
+
+- When deploying to Shinylive, just switch the commented imports
+```python
+from pyodide import http
+# from pyodide_local import http
+```
 
 ## How to use wrapper
 - 
