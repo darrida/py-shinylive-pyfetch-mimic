@@ -6,7 +6,7 @@ import re
 import shutil
 from dataclasses import dataclass
 from io import BytesIO
-from typing import Any, Literal
+from typing import Literal
 
 import httpx
 
@@ -82,22 +82,14 @@ class http:
             "url": url, 
             "headers": headers, 
             "follow_redirects": redirect,
-            "content": body  # `data` is used since it forces passing a "Content-Type" header, 
-                            # increasing the likelihood the same request works in the real `pyodide.http.pyfetch`
+            "content": body
         }
 
         async with httpx.AsyncClient() as client:
             r = await client.request(**request_arguments)
 
         ok = True if r.status_code >= 100 and r.status_code < 400 else False
-        # any(
-        #     [re.match(r"1\d\d", str(r.status_code)), 
-        #      re.match(r"2\d\d", str(r.status_code), 
-        #      re.match(r"3\d\d", r.status_code)]
-        # ) else False
-
         redirected = True if r.status_code >= 300 and r.status_code < 400 else False
-        # re.match(r"3\d\d", r.status_code) else False
 
         return FetchResponse(
             headers=r.headers,

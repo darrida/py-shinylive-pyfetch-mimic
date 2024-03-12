@@ -1,3 +1,10 @@
+# shinylive
+edit/
+shinylive/
+app.json
+index.html
+shinylive-sw.js
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

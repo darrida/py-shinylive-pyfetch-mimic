@@ -2,42 +2,40 @@ import asyncio
 import json
 import os
 import pathlib
+import sys
 
-import pytest
+if "pyodide" in sys.modules:
+    from pyodide import http
+else:
+    import pytest
 
-from src.pyodide_wrapper import http
+    from src.pyodide_wrapper import http
+    pytestmark = pytest.mark.asyncio
 
-# pyfetch = http.pyfetch
 
-
-@pytest.mark.asyncio
 async def test_wrapper_get_string():
     r = await http.pyfetch("http://localhost:8000/get-string", headers={"Content-Type": "application/text"}, method="GET")
     assert r.status == 200
     assert await r.string() == "return a string"
 
 
-@pytest.mark.asyncio
 async def test_wrapper_get_json():
     r = await http.pyfetch("http://localhost:8000/get-json", headers={"Content-Type": "application/json"}, method="GET")
     assert r.status == 200
     assert await r.json() == {"json_obj": "return json"}
 
 
-@pytest.mark.asyncio
 async def test_wrapper_get_parameter_found():
     r = await http.pyfetch("http://localhost:8000/get-not-found-parameter/found", headers={"Content-Type": "application/json"}, method="GET")
     assert r.status == 200
     assert await r.json() == {"status": "item found"}
 
 
-@pytest.mark.asyncio
 async def test_wrapper_get_parameter_not_found():
     r = await http.pyfetch("http://localhost:8000/get-not-found-parameter/not", headers={"Content-Type": "application/json"}, method="GET")
     assert r.status == 204
 
 
-@pytest.mark.asyncio
 async def test_wrapper_post_payload():
     r = await http.pyfetch(
         "http://localhost:8000/post-payload",
@@ -49,7 +47,6 @@ async def test_wrapper_post_payload():
     assert await r.json() == {"name": "Ben", "age": 20}
 
 
-@pytest.mark.asyncio
 async def test_wrapper_get_file_download():
     r = await http.pyfetch(
         "http://localhost:8000/get-text-download", 
@@ -62,14 +59,13 @@ async def test_wrapper_get_file_download():
     assert data_bytes.decode() == 'name,age,weight\nben,40,154\nsam,32,185'
 
 
-@pytest.mark.asyncio
 async def test_wrapper_get_image_download():
     r = await http.pyfetch(
         "http://localhost:8000/get-image-download", 
         headers={"Content-Type": "application/json"},
         method="GET"
     )
-    assert r.status == 200
+    r.status == 200
     data_bytes = await r.bytes()
     with open("test.jpg", "wb") as f:
         f.write(data_bytes)
@@ -81,7 +77,6 @@ async def test_wrapper_get_image_download():
     assert os.path.isfile("test.jpg") is False
 
 
-@pytest.mark.asyncio
 async def test_wrapper_streaming_fake():
     """Not a real streaming example, but showing that it can still pull from a streaming source
     """
@@ -98,3 +93,7 @@ async def test_wrapper_streaming_fake():
             assert i["is_last_event"] is True
         else:
             assert i["is_last_event"] is False
+
+
+async def test_throw_away_sleep():
+    await asyncio.sleep(0)

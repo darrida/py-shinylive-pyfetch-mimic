@@ -1,14 +1,12 @@
 import asyncio
 import json
-import logging
 import random
-import time
 from pathlib import Path
 from typing import List, Optional
 
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, Request, Response
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
-from pydantic import BaseModel, SecretStr
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -63,8 +61,8 @@ async def fake_data_streamer():
     size = 40
     for i in range(size):
         yield json.dumps({"event": i, "data": random.random(), "is_last_event": i == size-1}) + '\n'
-        # await asyncio.sleep(0.05)
-
+        # await asyncio.sleep(0)
+    # return
 
 @router.get("/get-streaming")
 async def get_streaming():
