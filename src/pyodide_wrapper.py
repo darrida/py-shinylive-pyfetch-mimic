@@ -23,21 +23,25 @@ class FetchResponse:
     body_used: bool
     do_not_use_body: bytes
 
+    # unit-tested
     async def string(self) -> str:
         return await self._text()
 
     async def text(self) -> str:
         return await self._text()
 
+    # unit-tested
     async def _text(self) -> str:
         return self.do_not_use_body.decode()
 
     async def buffer(self):
         logging.warning("`httpx_http.FetchResponse.buffer()` is not yet implimented for non-pyodide version")
 
+    # unit-tested
     async def bytes(self) -> bytes:
         return bytes(self.do_not_use_body)
 
+    # unit-tested
     async def json(self) -> dict:
         return json.loads(self.do_not_use_body)
 
