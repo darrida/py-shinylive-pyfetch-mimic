@@ -55,7 +55,7 @@ class FetchResponse:
         # shutil.unpack_archive(self.do_not_use_body, extract_dir=extract_dir, format=format)
 
     def raise_for_status(self):
-        if re.match(r"4\d\d", self.status) or re.match(r"5\d\d", self.status):
+        if self.status >= 400:
             raise OSError(
                 f"Request failed due to local issue. Status code: {self.status}. Status text: {self.status_text}"
             )
@@ -71,7 +71,7 @@ class http:
         headers: dict,
         method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"] = "GET",
         credentials: Literal["omit", "same-origin", "include"] = None,
-        body: dict = None,
+        body: str = None,  # i.e., in the case of a dictionary, pass to "body" using: `json.dumps({...})`
         redirect: bool = True,
     ) -> FetchResponse:
 
