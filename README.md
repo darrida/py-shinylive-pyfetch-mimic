@@ -56,7 +56,7 @@ df = pd.read_json(buf)
 ```
 
 ## Install Test Dependencies
-- `pip install -r test-requirements.txt`
+- `pip install -e '.[tests]'`
 
 ### Run regular tests
 - activate venv: `source venv/bin/activate`
