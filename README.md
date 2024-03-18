@@ -21,7 +21,7 @@ from pyodide import http
 ```
 
 ## How to use wrapper
-- 
+- requirements: see `pyproject.toml`; the goal is for shiny/shinylive to be the only requirements
 
 ## pyfetch examples
 
@@ -54,6 +54,9 @@ buf = BytesIO(await response_c.bytes())
 
 df = pd.read_json(buf)
 ```
+
+## Install Test Dependencies
+- `pip install -r test-requirements.txt`
 
 ### Run regular tests
 - activate venv: `source venv/bin/activate`
