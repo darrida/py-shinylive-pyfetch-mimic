@@ -65,7 +65,7 @@ df = pd.read_json(buf)
 
 ### Run pyodide tests with pyfetch calls written identical to wrapper
 - activate venv and start fastapi like above
-- export shinylive app: `hinylive export ./test/tests_shinylive ./src_test_webserver/shinyapps`
+- export shinylive app: `shinylive export ./test/tests_shinylive ./src_test_webserver/shinyapps`
 - open shinylive app in edit mode: `http://localhost8000/apps/edit/`
 - Click "Run tests"
 - If all function names at the bottom are followed by "passed", then everything should be ok
