@@ -1,7 +1,7 @@
 # pyfetch-mimic
 - This is a simple module that mimicks `pyodide.http.pyfetch` to make local development for `shinylive` projects easier. It may work with `pyodide` in general, but that use case hasn't been tested.
 
-## How to use wrapper
+## How to use
 - Include the following conditional import statement at the beginning of the module that will use `http.pyfetch`:
     ```python
     if "pyodide" in sys.modules:
@@ -21,7 +21,7 @@ if "pyodide" in sys.modules:
 else:
     from pyfetch_mimic import http
 
-response = await pyfetch("https://some_url/myfiles.zip")
+response = await http.pyfetch("https://some_url/myfiles.zip")
 await response.unpack_archive()
 ```
 
@@ -32,7 +32,7 @@ if "pyodide" in sys.modules:
 else:
     from pyfetch_mimic import http
 
-response = await pyodide.http.pyfetch(url())
+response = await http.pyfetch(url())
 
 with open("test.json", mode="wb") as file:
     file.write(await response.bytes())
@@ -48,7 +48,7 @@ if "pyodide" in sys.modules:
 else:
     from pyfetch_mimic import http
 
-response = await pyodide.http.pyfetch(url())
+response = await http.pyfetch(url())
 buf = BytesIO(await response_c.bytes())
 
 df = pd.read_json(buf)
