@@ -1,6 +1,6 @@
 [project]
 name = "pyfetch_mimic"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
   {name="darrida", email="darrida.py@gmail.com"}
 ]
