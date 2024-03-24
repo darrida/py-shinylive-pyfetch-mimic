@@ -4,6 +4,8 @@ shinylive/
 app.json
 index.html
 shinylive-sw.js
+.ruff_cache
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

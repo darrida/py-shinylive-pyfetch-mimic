@@ -23,8 +23,6 @@ tests = [
   'fastapi',
   'pytest',
   'pytest-asyncio',
-  'twine',
-  'build'
 ]
 
 [project.urls]

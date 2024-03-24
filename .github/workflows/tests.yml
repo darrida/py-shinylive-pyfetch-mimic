@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Upload Python Package
+name: Run pytest
 
 # on:
 #   release:
@@ -15,14 +15,10 @@ on: workflow_dispatch
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/pyfetch-mimic
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -31,9 +27,8 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install build
-    - name: Build package
-      run: python -m build
-    - name: Publish package distributions to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
+        python -m pip install pytest pytest-asynvio fastapi httpx
+    - name: Start endpoints
+      run: python src_test_webserver/main.py
+    - name: Run tests
+      uses: pytest -vv test
