@@ -8,7 +8,7 @@ if "pyodide" in sys.modules:
     from pyodide import http
 else:
     import pytest
-    from pyfetch_wrapper import http
+    from pyfetch_mimic import http
     pytestmark = pytest.mark.asyncio
 
 

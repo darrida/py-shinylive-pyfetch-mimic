@@ -1,16 +1,21 @@
 [project]
-name = "pyfetch_wrapper"
-version = "0.1"
+name = "pyfetch_mimic"
+version = "0.0.1"
 authors = [
   {name="darrida", email="darrida.py@gmail.com"}
 ]
-description = "Wrapper for pyodide.http.pyfetch to enable one set of http calls for both local and pyodide executions."
+description = "This is a module that mimics pyodide.http.pyfetch to enable simpler development by using one set of http calls for both local and pyodide executions."
 readme = "README.md"
 dependencies = [
   'shiny',
   'shinylive',
   'httpx',
   'python_version < 3.8',
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
 ]
 
 [project.optional-dependencies]
@@ -21,7 +26,8 @@ tests = [
 ]
 
 [project.urls]
-Homepage = "https://github.com"
+Homepage = "https://github.com/darrida/py-shinylive-pyfetch-wrapper"
+Issues = "https://github.com/darrida/py-shinylive-pyfetch-wrapper/issues"
 
 [build-system]
 requires = ["setuptools>=61.0"]
