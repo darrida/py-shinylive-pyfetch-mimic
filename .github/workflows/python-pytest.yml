@@ -37,7 +37,7 @@ jobs:
            PID=$!
            sleep 5 &&
            pytest -vv test &&
-           kill $PID
+           kill -INT $PID
     
     # - name: Run tests
     #   run: pytest -vv test
