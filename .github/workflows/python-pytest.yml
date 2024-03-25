@@ -19,9 +19,11 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Git Checkout
       uses: actions/checkout@v3
+    
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
@@ -34,4 +36,4 @@ jobs:
       run: python src_test_webserver/main.py
     
     - name: Run tests
-      uses: pytest -vv test
+      run: pytest -vv test
