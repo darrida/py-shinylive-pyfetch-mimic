@@ -36,7 +36,7 @@ jobs:
       run: python src_test_webserver/main.py &
            sleep 5 &&
            pytest -vv test &&
-           kill -9 'lsof -i:5000 -t'
+           kill -9 `lsof -i:5000 -t`
     
     # - name: Run tests
     #   run: pytest -vv test
