@@ -34,7 +34,7 @@ jobs:
     
     - name: Start endpoints
       run: python src_test_webserver/main.py &
-           PID=$!
+           PID=$! &&
            sleep 5 &&
            pytest -vv test &&
            kill -INT $PID
