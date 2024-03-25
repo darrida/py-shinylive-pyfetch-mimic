@@ -18,7 +18,7 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-publish:
     runs-on: ubuntu-latest
     environment:
       name: pypi
