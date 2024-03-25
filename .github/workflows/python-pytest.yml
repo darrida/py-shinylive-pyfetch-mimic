@@ -33,7 +33,7 @@ jobs:
       run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
     
     - name: Start endpoints
-      run: python src_test_webserver/main.py
+      run: python src_test_webserver/main.py && pytest -vv test
     
     - name: Run tests
       run: pytest -vv test
