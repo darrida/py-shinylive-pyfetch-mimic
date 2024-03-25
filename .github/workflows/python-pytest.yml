@@ -34,9 +34,10 @@ jobs:
     
     - name: Start endpoints
       run: python src_test_webserver/main.py &
+           PID=$!
            sleep 5 &&
            pytest -vv test &&
-           kill -9 `lsof -i:5000 -t`
+           kill $PID
     
     # - name: Run tests
     #   run: pytest -vv test
