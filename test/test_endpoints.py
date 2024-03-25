@@ -12,7 +12,10 @@ pytest_plugins = ('pytest_asyncio',)
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_get_string():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-string")
+        r = await client.get(
+            "http://localhost:8000/get-string",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 200
     assert r.text == "return a string"
 
@@ -20,7 +23,10 @@ async def test_fastapi_endpoint_get_string():
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_get_json():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-json")
+        r = await client.get(
+            "http://localhost:8000/get-json",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 200
     assert r.json() == {"json_obj": "return json"}
 
@@ -28,7 +34,10 @@ async def test_fastapi_endpoint_get_json():
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_parameter_found():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-not-found-parameter/found")
+        r = await client.get(
+            "http://localhost:8000/get-not-found-parameter/found",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 200
     assert r.json() == {"status": "item found"}
 
@@ -36,7 +45,10 @@ async def test_fastapi_endpoint_parameter_found():
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_parameter_not_found():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-not-found-parameter/not")
+        r = await client.get(
+            "http://localhost:8000/get-not-found-parameter/not",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 204
 
 
@@ -45,6 +57,7 @@ async def test_fastapi_endpoint_payload():
     async with httpx.AsyncClient() as client:
         r = await client.post(
             "http://localhost:8000/post-payload",
+            headers={"Content-Type": "application/json"},
             content=json.dumps({"name": "Ben", "age": 20})
         )
     assert r.status_code == 200
@@ -54,7 +67,10 @@ async def test_fastapi_endpoint_payload():
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_download_text_file():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-text-download")
+        r = await client.get(
+            "http://localhost:8000/get-text-download",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 200
     buffer = BytesIO(r.content)
     assert buffer.getvalue().decode() == 'name,age,weight\nben,40,154\nsam,32,185'
@@ -63,7 +79,10 @@ async def test_fastapi_endpoint_download_text_file():
 @pytest.mark.asyncio
 async def test_fastapi_endpoint_download_image_file():
     async with httpx.AsyncClient() as client:
-        r = await client.get("http://localhost:8000/get-image-download")
+        r = await client.get(
+            "http://localhost:8000/get-image-download",
+            headers={"Content-Type": "application/json"}
+        )
     assert r.status_code == 200
     with open("test.jpg", "wb") as f:
         f.write(r.content)
@@ -79,7 +98,11 @@ async def test_fastapi_endpoint_download_image_file():
 async def test_fastapi_endpoint_streaming():
     streamed_l = []
     async with httpx.AsyncClient() as client:
-        async with client.stream("GET", "http://localhost:8000/get-streaming") as r:
+        async with client.stream(
+            "GET", 
+            "http://localhost:8000/get-streaming",
+            headers={"Content-Type": "application/json"}
+        ) as r:
             async for chunk in r.aiter_lines():
                 streamed_l.append(chunk)
     assert r.status_code == 200

@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn pyfetch-mimic
     
-    - name: Start endpoints
+    - name: Test Endpoints and `pyfetch-mimic`
       run: python src_test_webserver/main.py &
            PID=$! &&
            sleep 5 &&
