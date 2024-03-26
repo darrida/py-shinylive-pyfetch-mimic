@@ -59,9 +59,10 @@ async def get_image_download():
 async def fake_data_streamer():
     size = 40
     for i in range(size):
-        yield json.dumps({"event": i, "data": random.random(), "is_last_event": i == size-1}) + '\n'
+        yield json.dumps({"event": i, "data": random.random(), "is_last_event": i == size - 1}) + "\n"
         # await asyncio.sleep(0)
     # return
+
 
 @router.get("/get-streaming")
 async def get_streaming():

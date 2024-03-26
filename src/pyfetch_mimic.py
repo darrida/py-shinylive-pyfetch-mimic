@@ -11,7 +11,6 @@ from typing import Literal
 if "pyodide" not in sys.modules:
     import httpx
 
-
     @dataclass
     class FetchResponse:
         headers: dict
@@ -36,7 +35,8 @@ if "pyodide" not in sys.modules:
             return self.do_not_use_body.decode()
 
         async def buffer(self):
-            logging.warning("`httpx_http.FetchResponse.buffer()` is not yet implimented for non-pyodide version")
+            logging.warning("`httpx_http.FetchResponse.buffer()` is not yet implemented for non-pyodide version")
+            return self
 
         # unit-tested
         async def bytes(self) -> bytes:
@@ -47,7 +47,8 @@ if "pyodide" not in sys.modules:
             return json.loads(self.do_not_use_body)
 
         async def memoryview(self):
-            logging.warning("`httpx_http.FetchResponse.memoryview()` is not yet implimented for non-pyodide version")
+            logging.warning("`httpx_http.FetchResponse.memoryview()` is not yet implemented for non-pyodide version")
+            return self
 
         async def unpack_archive(self, extract_dir: str, format: Literal["zip", "tar", "gztar", "bztar", "xztar"]):
             # treat data as an archive and unpack into target directory
@@ -62,20 +63,19 @@ if "pyodide" not in sys.modules:
                 )
 
         def clone(self) -> "FetchResponse":
-            return copy.copy(self, deepcopy=True)
-
+            # return copy.copy(self, deepcopy=True)
+            return copy.deepcopy(self)
 
     class http:
         @staticmethod
         async def pyfetch(
-            url: str, 
+            url: str,
             headers: dict,
             method: Literal["GET", "POST", "PUT", "DELETE", "PATCH"] = "GET",
             credentials: Literal["omit", "same-origin", "include"] = None,
             body: str = None,  # i.e., in the case of a dictionary, pass to "body" using: `json.dumps({...})`
             redirect: bool = True,
         ) -> FetchResponse:
-
             if credentials:
                 logging.warning(
                     "`credentials` parameter doesn't do anything when running outside of browser. "
@@ -83,27 +83,27 @@ if "pyodide" not in sys.modules:
                 )
 
             request_arguments = {
-                "method": method, 
-                "url": url, 
-                "headers": headers, 
+                "method": method,
+                "url": url,
+                "headers": headers,
                 "follow_redirects": redirect,
-                "content": body
+                "content": body,
             }
 
             async with httpx.AsyncClient() as client:
                 r = await client.request(**request_arguments)
 
-            ok = True if r.status_code >= 100 and r.status_code < 400 else False
-            redirected = True if r.status_code >= 300 and r.status_code < 400 else False
+            ok = True if 100 <= r.status_code < 400 else False
+            redirected = True if 300 <= r.status_code < 400 else False
 
             return FetchResponse(
                 headers=r.headers,
-                url=r.url,
+                url=str(r.url),
                 redirected=redirected,
                 status=r.status_code,
                 status_text=str(r.status_code),
                 do_not_use_body=r.content,
                 ok=ok,
-                body_used=False
+                body_used=False,
                 # type=None
             )
