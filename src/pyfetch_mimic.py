@@ -1,4 +1,3 @@
-# wrapper around pyfetch that matches pyodide.http.pyfetch
 import copy
 import json
 import logging
