@@ -1,6 +1,6 @@
 [project]
 name = "pyfetch_mimic"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   {name="darrida", email="darrida.py@gmail.com"}
 ]
@@ -10,7 +10,7 @@ dependencies = [
   'shiny',
   'shinylive',
   'httpx',
-  'python_version < 3.8',
+  'python_version < 3',
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

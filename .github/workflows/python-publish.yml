@@ -21,7 +21,7 @@ jobs:
   build-publish:
     runs-on: ubuntu-latest
     environment:
-      name: pypi
+      name: PyPI
       url: https://pypi.org/p/pyfetch-mimic
     steps:
     - uses: actions/checkout@v3
