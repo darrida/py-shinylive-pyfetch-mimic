@@ -1,4 +1,4 @@
-name: Run PyTest
+name: Run Robot
 
 on: workflow_dispatch
 
