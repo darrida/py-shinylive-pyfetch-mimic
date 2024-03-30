@@ -31,8 +31,8 @@ jobs:
 
     - name: Install dependencies
       run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
-    - name: Install Editable Package
-      run: python -m pip install -e .
+    - name: Install this package
+      run: python -m pip install .
 
     - name: Test Endpoints and `pyfetch-mimic`
                                                 # "&" vs "&&":
