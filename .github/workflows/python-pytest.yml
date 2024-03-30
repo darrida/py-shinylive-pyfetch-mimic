@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies and this package
       run: |
         python -m pip install --upgrade pip
-        python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
+        pip install pytest pytest-asyncio fastapi httpx uvicorn
 #        python -m pip install -e . || true
 
     - name: Test Endpoints and `pyfetch-mimic`
