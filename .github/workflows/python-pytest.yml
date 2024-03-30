@@ -22,18 +22,17 @@ jobs:
 
     steps:
     - name: Git Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
 
-    - name: Install dependencies and this package
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest pytest-asyncio fastapi httpx uvicorn
-#        python -m pip install -e . || true
+    - run: python -m pip install --upgrade pip pytest pytest-asyncio fastapi httpx uvicorn
+
+    - name: Install package
+      run: python -m pip install -e . || true
 
     - name: Test Endpoints and `pyfetch-mimic`
                                                 # "&" vs "&&":
