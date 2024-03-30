@@ -1,6 +1,11 @@
 # pyfetch-mimic
 - This is a simple module that mimics `pyodide.http.pyfetch` to make local development for `shinylive` projects easier. It may work with `pyodide` in general, but that use case hasn't been tested.
 
+## Install
+- PyPI: `pip install pyfetch-mimic`
+- Vendoring:
+  - Copy `pyfetch_mimic.py` into your own project
+
 ## How to use
 - Include the following conditional import statement at the beginning of the module that will use `http.pyfetch`:
     ```python
