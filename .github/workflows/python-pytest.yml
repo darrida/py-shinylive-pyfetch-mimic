@@ -26,7 +26,3 @@ jobs:
            sleep 5 &&
            pytest -vv test &&
            kill -INT $PID
-    - name: Install Robot Framework Dependencies
-      run: python -m pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
-    - name: Run Robot Tests on same calls with pyodide.http.pyfetch
-      run: robot test/robot_tests/

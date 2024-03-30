@@ -1,0 +1,27 @@
+name: Run PyTest
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - name: Robot Framework
+      uses: joonvena/robotframework-docker-action@v1.0
+      with:
+        browser: 'firefox'
+    - run: |
+        python -m pip install --upgrade pip 
+        pip install pytest pytest-asyncio fastapi httpx uvicorn
+#    - name: Install Robot Framework Dependencies
+#      run: python -m pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
+    - name: Run Robot Tests on same calls with pyodide.http.pyfetch
+      run: robot test/robot_tests/
