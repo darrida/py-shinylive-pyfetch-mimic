@@ -31,17 +31,15 @@ jobs:
 
     - name: Install dependencies
       run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
+    - name: Install Editable Package
+      run: python -m pip install -e .
 
     - name: Test Endpoints and `pyfetch-mimic`
-      run: python src_test_webserver/main.py &
-           PID=$! &&
-           sleep 5 &&
-           pytest -vv test &&
-           kill -INT $PID
-
-    # - name: Run tests
-    #   run: pytest -vv test
-    - name: Install Robot Framework Dependencies
-      run: python -m pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
-    - name: Run Robot Tests on same calls with pyodide.http.pyfetch
-      run: robot test/robot_tests/
+                                                # "&" vs "&&":
+                                                # - "&": Start process then "move" to the background (don't want for it to finish to move onto the next step)
+                                                # - "&&": Runs if, and only if, previous step ends with an exit status of 0 (indicates success)
+      run: python src_test_webserver/main.py &  # (1) Start dev fastapi endpoints used for tests in unattached manner
+           PID=$! &&                            # (2) Grab PID of most recently started process
+           sleep 5 &&                           # (3) Allow time for fastapi app to start
+           pytest -vv test &&                   # (4) Execute tests
+           kill -INT $PID                       # (5) Shutdown fastapi app using PID from second step
