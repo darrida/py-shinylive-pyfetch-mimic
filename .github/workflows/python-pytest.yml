@@ -44,3 +44,6 @@ jobs:
 
     - name: Test pyfetch versions of calls with Robot Framework
       run: robot test/robot_tests/
+
+
+# pytest pytest-asyncio fastapi httpx uvicorn pyfetch-mimic robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
