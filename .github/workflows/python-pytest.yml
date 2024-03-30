@@ -30,7 +30,7 @@ jobs:
         python-version: '3.x'
     
     - name: Install dependencies
-      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn pyfetch-mimic
+      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn pyfetch-mimic robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
     
     - name: Test Endpoints and `pyfetch-mimic`
                                                 # "&" vs "&&":
@@ -41,3 +41,6 @@ jobs:
            sleep 5 &&                           # (3) Allow time for fastapi app to start
            pytest -vv test &&                   # (4) Execute tests
            kill -INT $PID                       # (5) Shutdown fastapi app using PID from second step
+
+    - name: Test pyfetch versions of calls with Robot Framework
+      run: robot test/robot_tests/
