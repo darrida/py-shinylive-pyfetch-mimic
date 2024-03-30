@@ -27,7 +27,8 @@ jobs:
       with:
         python-version: '3.x'
     - name: Install dependencies
-      run: pip install pytest pytest-asyncio fastapi httpx uvicorn
+      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
+#      run: pip install pytest pytest-asyncio fastapi httpx uvicorn
     - name: Test Endpoints and `pyfetch-mimic`
                                                 # "&" vs "&&":
                                                 # - "&": Start process then "move" to the background (don't want for it to finish to move onto the next step)
@@ -40,4 +41,4 @@ jobs:
     # - name: Run tests
     #   run: pytest -vv test
     - name: Install Robot Framework Dependencies
-      run: python -m pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
+      run: pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
