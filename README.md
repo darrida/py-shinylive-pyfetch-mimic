@@ -17,7 +17,7 @@
         from pyfetch_mimic import http
     ```
 - Use `http.pyfetch` as usual
-- **NOTE**: This is a *work in progress* and does not support all use case variations yet. It will be updated as need arises.
+- **NOTE**: This is a *work in progress* and does not support all `pyodide.http.pyfetch` functionality yet. I use this in my own production work, and the functionality that currently exists is simply the functionality that I need. If there is a need for additional functionality, please open an issue or pull request.
 
 ## pyfetch examples
 - These should all work with python `pyodide.http.pyfetch` and `pyfetch_mimic.http.pyfetch`
