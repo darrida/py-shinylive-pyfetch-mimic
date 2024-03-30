@@ -44,9 +44,11 @@ build-backend = "setuptools.build_meta"
 [tool.ruff]
 line-length = 120
 extend-exclude = [".venv", "*.robot"]
+
+[tool.ruff.lint]
 extend-select = ["S", "I"]  # bandit (S), isort (I)
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 extra-standard-library = []
 known-first-party = []
 known-third-party = []

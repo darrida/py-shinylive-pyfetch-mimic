@@ -1,3 +1,4 @@
+# ruff: noqa: S101
 import asyncio
 import json
 import os
@@ -9,11 +10,14 @@ if "pyodide" in sys.modules:
 else:
     import pytest
     from pyfetch_mimic import http
+
     pytestmark = pytest.mark.asyncio
 
 
 async def test_wrapper_get_string():
-    r = await http.pyfetch("http://localhost:8000/get-string", headers={"Content-Type": "application/text"}, method="GET")
+    r = await http.pyfetch(
+        "http://localhost:8000/get-string", headers={"Content-Type": "application/text"}, method="GET"
+    )
     assert r.status == 200
     assert await r.string() == "return a string"
 
@@ -25,22 +29,28 @@ async def test_wrapper_get_json():
 
 
 async def test_wrapper_get_parameter_found():
-    r = await http.pyfetch("http://localhost:8000/get-not-found-parameter/found", headers={"Content-Type": "application/json"}, method="GET")
+    r = await http.pyfetch(
+        "http://localhost:8000/get-not-found-parameter/found",
+        headers={"Content-Type": "application/json"},
+        method="GET",
+    )
     assert r.status == 200
     assert await r.json() == {"status": "item found"}
 
 
 async def test_wrapper_get_parameter_not_found():
-    r = await http.pyfetch("http://localhost:8000/get-not-found-parameter/not", headers={"Content-Type": "application/json"}, method="GET")
+    r = await http.pyfetch(
+        "http://localhost:8000/get-not-found-parameter/not", headers={"Content-Type": "application/json"}, method="GET"
+    )
     assert r.status == 204
 
 
 async def test_wrapper_post_payload():
     r = await http.pyfetch(
         "http://localhost:8000/post-payload",
-        headers={"Content-Type": "application/json"},  
+        headers={"Content-Type": "application/json"},
         method="POST",
-        body=json.dumps({"name": "Ben", "age": 20})
+        body=json.dumps({"name": "Ben", "age": 20}),
     )
     assert r.status == 200
     assert await r.json() == {"name": "Ben", "age": 20}
@@ -48,21 +58,17 @@ async def test_wrapper_post_payload():
 
 async def test_wrapper_get_file_download():
     r = await http.pyfetch(
-        "http://localhost:8000/get-text-download", 
-        headers={"Content-Type": "application/json"},
-        method="GET"
+        "http://localhost:8000/get-text-download", headers={"Content-Type": "application/json"}, method="GET"
     )
     assert r.status == 200
     # buffer = r.bytes()
     data_bytes = await r.bytes()
-    assert data_bytes.decode() == 'name,age,weight\nben,40,154\nsam,32,185'
+    assert data_bytes.decode() == "name,age,weight\nben,40,154\nsam,32,185"
 
 
 async def test_wrapper_get_image_download():
     r = await http.pyfetch(
-        "http://localhost:8000/get-image-download", 
-        headers={"Content-Type": "application/json"},
-        method="GET"
+        "http://localhost:8000/get-image-download", headers={"Content-Type": "application/json"}, method="GET"
     )
     r.status == 200
     data_bytes = await r.bytes()
@@ -77,9 +83,11 @@ async def test_wrapper_get_image_download():
 
 
 async def test_wrapper_streaming_fake():
-    """Not a real streaming example, but showing that it can still pull from a streaming source
-    """
-    r = await http.pyfetch("http://localhost:8000/get-streaming", headers={"Content-Type": "application/json"},)
+    """Not a real streaming example, but showing that it can still pull from a streaming source"""
+    r = await http.pyfetch(
+        "http://localhost:8000/get-streaming",
+        headers={"Content-Type": "application/json"},
+    )
     assert r.status == 200
     data = await r.string()
     data = data.split("\n")
