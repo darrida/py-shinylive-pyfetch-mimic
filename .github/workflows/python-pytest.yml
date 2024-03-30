@@ -19,25 +19,69 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
     - name: Git Checkout
       uses: actions/checkout@v3
+
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
+
     - name: Install dependencies
-      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
+      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn pyfetch-mimic
+
     - name: Test Endpoints and `pyfetch-mimic`
-                                                # "&" vs "&&":
-                                                # - "&": Start process then "move" to the background (don't want for it to finish to move onto the next step)
-                                                # - "&&": Runs if, and only if, previous step ends with an exit status of 0 (indicates success)
-      run: python src_test_webserver/main.py &  # (1) Start dev fastapi endpoints used for tests in unattached manner
-           PID=$! &&                            # (2) Grab PID of most recently started process
-           sleep 5 &&                           # (3) Allow time for fastapi app to start
-           pytest -vv test &&                   # (4) Execute tests
-           kill -INT $PID                       # (5) Shutdown fastapi app using PID from second step
+      run: python src_test_webserver/main.py &
+           PID=$! &&
+           sleep 5 &&
+           pytest -vv test &&
+           kill -INT $PID
+
     # - name: Run tests
     #   run: pytest -vv test
-    - name: Install Robot Framework Dependencies
-      run: pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
+
+## This workflow will upload a Python Package using Twine when a release is created
+## For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python#publishing-to-package-registries
+#
+## This workflow uses actions that are not certified by GitHub.
+## They are provided by a third-party and are governed by
+## separate terms of service, privacy policy, and support
+## documentation.
+#
+#name: Run PyTest
+#
+## on:
+##   release:
+##     types: [published]
+#on: workflow_dispatch
+#
+#permissions:
+#  contents: read
+#
+#jobs:
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Git Checkout
+#      uses: actions/checkout@v3
+#    - name: Set up Python
+#      uses: actions/setup-python@v3
+#      with:
+#        python-version: '3.x'
+#    - name: Install dependencies
+#      run: python -m pip install pytest pytest-asyncio fastapi httpx uvicorn
+#    - name: Test Endpoints and `pyfetch-mimic`
+#                                                # "&" vs "&&":
+#                                                # - "&": Start process then "move" to the background (don't want for it to finish to move onto the next step)
+#                                                # - "&&": Runs if, and only if, previous step ends with an exit status of 0 (indicates success)
+#      run: python src_test_webserver/main.py &  # (1) Start dev fastapi endpoints used for tests in unattached manner
+#           PID=$! &&                            # (2) Grab PID of most recently started process
+#           sleep 5 &&                           # (3) Allow time for fastapi app to start
+#           pytest -vv test &&                   # (4) Execute tests
+#           kill -INT $PID                       # (5) Shutdown fastapi app using PID from second step
+#    # - name: Run tests
+#    #   run: pytest -vv test
+#    - name: Install Robot Framework Dependencies
+#      run: pip install robotframework robotframework-dependencylibrary robotframework-pythonlibcore robotframework-seleniumlibrary robotframework-stacktrace selenium seleniumbase coverage
