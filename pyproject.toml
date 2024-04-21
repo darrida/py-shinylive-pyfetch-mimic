@@ -1,6 +1,6 @@
 [project]
 name = "pyfetch_mimic"
-version = "0.0.4"
+version = "2024.04.20"
 authors = [
   {name="darrida", email="darrida.py@gmail.com"}
 ]
@@ -8,7 +8,6 @@ description = "This is a module that mimics pyodide.http.pyfetch to enable simpl
 readme = "README.md"
 dependencies = [
   'shiny',
-  'shinylive',
   'httpx',
   'python_version < 3',
 ]
@@ -30,7 +29,8 @@ tests = [
   'robotframework-stacktrace',
   'selenium',
   'seleniumbase',
-  'coverage'
+  'coverage',
+  'shinylive'
 ]
 
 [project.urls]
