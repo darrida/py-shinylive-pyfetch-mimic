@@ -8,6 +8,11 @@ shinylive-sw.js
 .DS_Store
 .logs/
 
+# robotframework
+log.html
+output.xml
+report.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
