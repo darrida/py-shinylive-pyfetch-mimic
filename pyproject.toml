@@ -9,7 +9,6 @@ readme = "README.md"
 dependencies = [
   'shiny',
   'httpx',
-  'python_version < 3',
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
